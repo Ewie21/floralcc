@@ -19,10 +19,10 @@ pub fn main() {
     let args = Args::parse();
     let file_name: std::path::PathBuf = args.path;
     let exe_name: String = args.name;
-    test(file_name, exe_name, args.debug);
+    compile_c_file(file_name, exe_name, args.debug);
 }
 
-pub fn test(file_name: std::path::PathBuf, exe_name: String, debug: bool) {
+pub fn compile_c_file(file_name: std::path::PathBuf, exe_name: String, debug: bool) {
     let buff = std::fs::read_to_string(file_name).expect("Source file must exist");
     let (tokens, line_tracker) = lexer::string_to_tokens(&buff).unwrap();
     let node = parser::program(tokens, line_tracker, debug).unwrap();
