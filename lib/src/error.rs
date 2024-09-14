@@ -13,6 +13,7 @@ pub enum ET {
     ExpectedCondition,
     ExpectedOParen,
     ExpectedCCurl,
+    ExpectedOCurl,
     ExpectedStrLiteral,
     ExpectedType,
     ExpectedSemi,

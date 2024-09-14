@@ -280,6 +280,7 @@ pub fn statement(
         Token::Assert => assert_statement(token_handler),
         Token::Return => return_statement(token_handler),
         Token::PutChar => putchar_statement(token_handler),
+        Token::Struct => struct_declaration_handler(token_handler),
         _ => Err(token_handler.new_err(ET::ExpectedStatement)),
     }
 }
@@ -914,7 +915,7 @@ pub fn struct_declaration_handler(token_handler: &mut TokenHandler) -> Result<To
 
     token_handler.next_token();
     if *token_handler.get_token() != Token::OCurl {
-        return Err(token_handler.new_err(ET::ExpectedOParen));
+        return Err(token_handler.new_err(ET::ExpectedOCurl));
     }
 
     let mut field_definitions = vec![];
@@ -922,11 +923,13 @@ pub fn struct_declaration_handler(token_handler: &mut TokenHandler) -> Result<To
     while let Token::Type(t) = token_handler.get_token() {
         let declaration = declaration_statement(token_handler, t.clone())?;
         field_definitions.push(declaration);
+        token_handler.next_token();
     }
+
     let struct_declaration_node =
         TokenNode::new(NodeType::StructDeclaration(id), Some(field_definitions));
 
-    token_handler.next_token();
+    println!("test: {:?}", token_handler.get_token());
     if *token_handler.get_token() != Token::CCurl {
         return Err(token_handler.new_err(ET::ExpectedCCurl));
     }

@@ -107,6 +107,28 @@ pub fn string_to_tokens(
                 }
                 ret.push(Token::StrLiteral(str));
             }
+            's' => {
+                if chars[i + 1] == 't'
+                    && chars[i + 2] == 'r'
+                    && chars[i + 3] == 'u'
+                    && chars[i + 4] == 'c'
+                    && chars[i + 5] == 't'
+                    && chars[i + 6] == ' '
+                {
+                    ret.push(Token::Struct);
+                    i += 5;
+                } else {
+                    for j in i..chars.len() {
+                        if !chars[j].is_alphabetic() && chars[j] != '_' {
+                            break;
+                        }
+                        curr.push(chars[j]);
+                    }
+                    ret.push(Token::Id(curr.clone()));
+                    i += curr.len() - 1;
+                    curr = String::from("");
+                }
+            }
             'i' => {
                 if chars[i + 1] == 'n' && chars[i + 2] == 't' && chars[i + 3] == ' ' {
                     // split.push(String::from("int"));
@@ -633,6 +655,7 @@ pub fn string_to_tokens(
 #[derive(Debug, PartialEq, Clone)]
 pub enum Token {
     If,
+    Struct,
     Break,
     For,
     While,
