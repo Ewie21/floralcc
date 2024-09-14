@@ -1,4 +1,4 @@
-use crate::compiler::parser::{AssignmentOpType, NodeType, ScopeType, TokenNode};
+use crate::parser::{AssignmentOpType, NodeType, ScopeType, TokenNode};
 use std::collections::HashMap;
 
 use super::lexer::RhTypes;

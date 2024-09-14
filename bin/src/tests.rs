@@ -1,14 +1,16 @@
 use colored::Colorize;
 use std::{
-    fs, io,
+    env, fs, io,
     path::{Path, PathBuf},
     process::Command,
 };
 
 #[test]
 fn test_all() {
+    let path = env::current_dir().unwrap();
+    println!("The current directory is {}", path.display());
     let tests: Vec<PathBuf> =
-        get_all_files(&Path::new("tests/core")).expect("No files to be tests");
+        get_all_files(&Path::new("../tests/core")).expect("No files to be tests");
     let mut ret = String::new();
 
     for test_i in 0..tests.len() {
@@ -17,12 +19,12 @@ fn test_all() {
         println!("name: {}", name);
 
         Command::new("bash")
-            .arg("test_rh.sh")
+            .arg("../test_rh.sh")
             .arg(format!("{}", name))
             .spawn()
             .expect("Assembling failed");
 
-        let generated_output = Command::new(format!("./gen/core/{}", name)).output();
+        let generated_output = Command::new(format!("../gen/core/{}", name)).output();
         match generated_output {
             Ok(_) => ret.push_str(format!("{}\t\t\t[{}]", name, "OK".green()).as_str()),
             Err(err) => ret.push_str(format!("{}\t\t\t[{}]\n{}", name, "ERR".red(), err).as_str()),

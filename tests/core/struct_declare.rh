@@ -1,0 +1,4 @@
+struct TestStruct {
+    int x;
+    int y;
+}

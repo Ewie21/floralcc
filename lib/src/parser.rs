@@ -1,5 +1,5 @@
-use crate::compiler::error::{RhErr, ET};
-use crate::compiler::lexer::{LineNumHandler, RhTypes, Token};
+use crate::error::{RhErr, ET};
+use crate::lexer::{LineNumHandler, RhTypes, Token};
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum ScopeType {
@@ -55,6 +55,7 @@ pub enum NodeType {
     Assert,
     Return,
     PutChar,
+    StructDeclaration(String),
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -901,4 +902,34 @@ pub fn return_statement(token_handler: &mut TokenHandler) -> Result<TokenNode, R
     }
     let return_token = TokenNode::new(NodeType::Return, Some(vec![expr_node]));
     return Ok(return_token);
+}
+
+pub fn struct_declaration_handler(token_handler: &mut TokenHandler) -> Result<TokenNode, RhErr> {
+    token_handler.next_token();
+    let id = if let Token::Id(id) = token_handler.get_token() {
+        id.to_string()
+    } else {
+        return Err(token_handler.new_err(ET::ExpectedId));
+    };
+
+    token_handler.next_token();
+    if *token_handler.get_token() != Token::OCurl {
+        return Err(token_handler.new_err(ET::ExpectedOParen));
+    }
+
+    let mut field_definitions = vec![];
+    token_handler.next_token();
+    while let Token::Type(t) = token_handler.get_token() {
+        let declaration = declaration_statement(token_handler, t.clone())?;
+        field_definitions.push(declaration);
+    }
+    let struct_declaration_node =
+        TokenNode::new(NodeType::StructDeclaration(id), Some(field_definitions));
+
+    token_handler.next_token();
+    if *token_handler.get_token() != Token::CCurl {
+        return Err(token_handler.new_err(ET::ExpectedCCurl));
+    }
+
+    Ok(struct_declaration_node)
 }
