@@ -929,7 +929,6 @@ pub fn struct_declaration_handler(token_handler: &mut TokenHandler) -> Result<To
     let struct_declaration_node =
         TokenNode::new(NodeType::StructDeclaration(id), Some(field_definitions));
 
-    println!("test: {:?}", token_handler.get_token());
     if *token_handler.get_token() != Token::CCurl {
         return Err(token_handler.new_err(ET::ExpectedCCurl));
     }

@@ -18,7 +18,6 @@ void memset(int des, int src, int len) {
     int i = 0;
     while (i != len) {
         des[i] = src[i];
-        put(des[i]);
         i += 1;
     }
 }
@@ -56,6 +55,7 @@ int mo = [2; 'm', 'o'];
 memset(auto_ptr, mo, 2);
 put('\n');
 strput(auto_ptr);
+put('\n');
 int desk_len = strlen(desk_ptr);
 fill(desk_ptr, 'r', desk_len);
 strput(desk_ptr);

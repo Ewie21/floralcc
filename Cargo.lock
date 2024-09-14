@@ -58,6 +58,8 @@ dependencies = [
  "clap",
  "colored",
  "rhododendron",
+ "test-each",
+ "test_each_file",
 ]
 
 [[package]]
@@ -115,6 +117,12 @@ dependencies = [
  "lazy_static",
  "windows-sys 0.48.0",
 ]
+
+[[package]]
+name = "glob"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d2fabcfbdc87f4758337ca535fb41a6d701b65693ce38287d856d1674551ec9b"
 
 [[package]]
 name = "heck"
@@ -225,6 +233,39 @@ checksum = "9f35bcdf61fd8e7be6caf75f429fdca8beb3ed76584befb503b1569faee373ed"
 dependencies = [
  "proc-macro2",
  "quote",
+ "unicode-ident",
+]
+
+[[package]]
+name = "test-each"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d822711cf1d4a8d8adc34414c26c85f9144c692903c45a47a04ee4ffb360e5bc"
+dependencies = [
+ "test-each-codegen",
+]
+
+[[package]]
+name = "test-each-codegen"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ad5bbe324addbdc5ee683822d0812e9bb63fbeabff10baf0d11fcfc7a0ff2122"
+dependencies = [
+ "glob",
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "test_each_file"
+version = "0.3.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f9576037ae2a919664866c736156fd646d1c0e4e217244b1da05f56204dd6c61"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
  "unicode-ident",
 ]
 

@@ -1,0 +1,363 @@
+#![feature(prelude_import)]
+#[prelude_import]
+use std::prelude::rust_2021::*;
+#[macro_use]
+extern crate std;
+use clap::{ArgAction, Parser};
+use rhododendron::compile_c_file;
+#[command(author, version, about, long_about = None)]
+struct Args {
+    path: std::path::PathBuf,
+    name: String,
+    #[clap(long, short, action = ArgAction::SetFalse)]
+    debug: bool,
+}
+#[automatically_derived]
+#[allow(unused_qualifications, clippy::redundant_locals)]
+impl clap::Parser for Args {}
+#[allow(
+    dead_code,
+    unreachable_code,
+    unused_variables,
+    unused_braces,
+    unused_qualifications,
+)]
+#[allow(
+    clippy::style,
+    clippy::complexity,
+    clippy::pedantic,
+    clippy::restriction,
+    clippy::perf,
+    clippy::deprecated,
+    clippy::nursery,
+    clippy::cargo,
+    clippy::suspicious_else_formatting,
+    clippy::almost_swapped,
+    clippy::redundant_locals,
+)]
+#[automatically_derived]
+impl clap::CommandFactory for Args {
+    fn command<'b>() -> clap::Command {
+        let __clap_app = clap::Command::new("bin");
+        <Self as clap::Args>::augment_args(__clap_app)
+    }
+    fn command_for_update<'b>() -> clap::Command {
+        let __clap_app = clap::Command::new("bin");
+        <Self as clap::Args>::augment_args_for_update(__clap_app)
+    }
+}
+#[allow(
+    dead_code,
+    unreachable_code,
+    unused_variables,
+    unused_braces,
+    unused_qualifications,
+)]
+#[allow(
+    clippy::style,
+    clippy::complexity,
+    clippy::pedantic,
+    clippy::restriction,
+    clippy::perf,
+    clippy::deprecated,
+    clippy::nursery,
+    clippy::cargo,
+    clippy::suspicious_else_formatting,
+    clippy::almost_swapped,
+    clippy::redundant_locals,
+)]
+#[automatically_derived]
+impl clap::FromArgMatches for Args {
+    fn from_arg_matches(
+        __clap_arg_matches: &clap::ArgMatches,
+    ) -> ::std::result::Result<Self, clap::Error> {
+        Self::from_arg_matches_mut(&mut __clap_arg_matches.clone())
+    }
+    fn from_arg_matches_mut(
+        __clap_arg_matches: &mut clap::ArgMatches,
+    ) -> ::std::result::Result<Self, clap::Error> {
+        #![allow(deprecated)]
+        let v = Args {
+            path: __clap_arg_matches
+                .remove_one::<std::path::PathBuf>("path")
+                .ok_or_else(|| clap::Error::raw(
+                    clap::error::ErrorKind::MissingRequiredArgument,
+                    "The following required argument was not provided: path",
+                ))?,
+            name: __clap_arg_matches
+                .remove_one::<String>("name")
+                .ok_or_else(|| clap::Error::raw(
+                    clap::error::ErrorKind::MissingRequiredArgument,
+                    "The following required argument was not provided: name",
+                ))?,
+            debug: __clap_arg_matches
+                .remove_one::<bool>("debug")
+                .ok_or_else(|| clap::Error::raw(
+                    clap::error::ErrorKind::MissingRequiredArgument,
+                    "The following required argument was not provided: debug",
+                ))?,
+        };
+        ::std::result::Result::Ok(v)
+    }
+    fn update_from_arg_matches(
+        &mut self,
+        __clap_arg_matches: &clap::ArgMatches,
+    ) -> ::std::result::Result<(), clap::Error> {
+        self.update_from_arg_matches_mut(&mut __clap_arg_matches.clone())
+    }
+    fn update_from_arg_matches_mut(
+        &mut self,
+        __clap_arg_matches: &mut clap::ArgMatches,
+    ) -> ::std::result::Result<(), clap::Error> {
+        #![allow(deprecated)]
+        if __clap_arg_matches.contains_id("path") {
+            #[allow(non_snake_case)]
+            let path = &mut self.path;
+            *path = __clap_arg_matches
+                .remove_one::<std::path::PathBuf>("path")
+                .ok_or_else(|| clap::Error::raw(
+                    clap::error::ErrorKind::MissingRequiredArgument,
+                    "The following required argument was not provided: path",
+                ))?;
+        }
+        if __clap_arg_matches.contains_id("name") {
+            #[allow(non_snake_case)]
+            let name = &mut self.name;
+            *name = __clap_arg_matches
+                .remove_one::<String>("name")
+                .ok_or_else(|| clap::Error::raw(
+                    clap::error::ErrorKind::MissingRequiredArgument,
+                    "The following required argument was not provided: name",
+                ))?;
+        }
+        if __clap_arg_matches.contains_id("debug") {
+            #[allow(non_snake_case)]
+            let debug = &mut self.debug;
+            *debug = __clap_arg_matches
+                .remove_one::<bool>("debug")
+                .ok_or_else(|| clap::Error::raw(
+                    clap::error::ErrorKind::MissingRequiredArgument,
+                    "The following required argument was not provided: debug",
+                ))?;
+        }
+        ::std::result::Result::Ok(())
+    }
+}
+#[allow(
+    dead_code,
+    unreachable_code,
+    unused_variables,
+    unused_braces,
+    unused_qualifications,
+)]
+#[allow(
+    clippy::style,
+    clippy::complexity,
+    clippy::pedantic,
+    clippy::restriction,
+    clippy::perf,
+    clippy::deprecated,
+    clippy::nursery,
+    clippy::cargo,
+    clippy::suspicious_else_formatting,
+    clippy::almost_swapped,
+    clippy::redundant_locals,
+)]
+#[automatically_derived]
+impl clap::Args for Args {
+    fn group_id() -> Option<clap::Id> {
+        Some(clap::Id::from("Args"))
+    }
+    fn augment_args<'b>(__clap_app: clap::Command) -> clap::Command {
+        {
+            let __clap_app = __clap_app
+                .group(
+                    clap::ArgGroup::new("Args")
+                        .multiple(true)
+                        .args({
+                            let members: [clap::Id; 3usize] = [
+                                clap::Id::from("path"),
+                                clap::Id::from("name"),
+                                clap::Id::from("debug"),
+                            ];
+                            members
+                        }),
+                );
+            let __clap_app = __clap_app
+                .arg({
+                    #[allow(deprecated)]
+                    let arg = clap::Arg::new("path")
+                        .value_name("PATH")
+                        .required(true && clap::ArgAction::Set.takes_values())
+                        .value_parser({
+                            use ::clap_builder::builder::impl_prelude::*;
+                            let auto = ::clap_builder::builder::_infer_ValueParser_for::<
+                                std::path::PathBuf,
+                            >::new();
+                            (&&&&&&auto).value_parser()
+                        })
+                        .action(clap::ArgAction::Set);
+                    let arg = arg;
+                    let arg = arg;
+                    arg
+                });
+            let __clap_app = __clap_app
+                .arg({
+                    #[allow(deprecated)]
+                    let arg = clap::Arg::new("name")
+                        .value_name("NAME")
+                        .required(true && clap::ArgAction::Set.takes_values())
+                        .value_parser({
+                            use ::clap_builder::builder::impl_prelude::*;
+                            let auto = ::clap_builder::builder::_infer_ValueParser_for::<
+                                String,
+                            >::new();
+                            (&&&&&&auto).value_parser()
+                        })
+                        .action(clap::ArgAction::Set);
+                    let arg = arg;
+                    let arg = arg;
+                    arg
+                });
+            let __clap_app = __clap_app
+                .arg({
+                    #[allow(deprecated)]
+                    let arg = clap::Arg::new("debug")
+                        .value_name("DEBUG")
+                        .required(true && ArgAction::SetFalse.takes_values())
+                        .value_parser({
+                            use ::clap_builder::builder::impl_prelude::*;
+                            let auto = ::clap_builder::builder::_infer_ValueParser_for::<
+                                bool,
+                            >::new();
+                            (&&&&&&auto).value_parser()
+                        })
+                        .action(ArgAction::SetFalse);
+                    let arg = arg.long("debug").short('d');
+                    let arg = arg;
+                    arg
+                });
+            __clap_app.version("0.1.0").long_about(None)
+        }
+    }
+    fn augment_args_for_update<'b>(__clap_app: clap::Command) -> clap::Command {
+        {
+            let __clap_app = __clap_app
+                .group(
+                    clap::ArgGroup::new("Args")
+                        .multiple(true)
+                        .args({
+                            let members: [clap::Id; 3usize] = [
+                                clap::Id::from("path"),
+                                clap::Id::from("name"),
+                                clap::Id::from("debug"),
+                            ];
+                            members
+                        }),
+                );
+            let __clap_app = __clap_app
+                .arg({
+                    #[allow(deprecated)]
+                    let arg = clap::Arg::new("path")
+                        .value_name("PATH")
+                        .required(true && clap::ArgAction::Set.takes_values())
+                        .value_parser({
+                            use ::clap_builder::builder::impl_prelude::*;
+                            let auto = ::clap_builder::builder::_infer_ValueParser_for::<
+                                std::path::PathBuf,
+                            >::new();
+                            (&&&&&&auto).value_parser()
+                        })
+                        .action(clap::ArgAction::Set);
+                    let arg = arg;
+                    let arg = arg.required(false);
+                    arg
+                });
+            let __clap_app = __clap_app
+                .arg({
+                    #[allow(deprecated)]
+                    let arg = clap::Arg::new("name")
+                        .value_name("NAME")
+                        .required(true && clap::ArgAction::Set.takes_values())
+                        .value_parser({
+                            use ::clap_builder::builder::impl_prelude::*;
+                            let auto = ::clap_builder::builder::_infer_ValueParser_for::<
+                                String,
+                            >::new();
+                            (&&&&&&auto).value_parser()
+                        })
+                        .action(clap::ArgAction::Set);
+                    let arg = arg;
+                    let arg = arg.required(false);
+                    arg
+                });
+            let __clap_app = __clap_app
+                .arg({
+                    #[allow(deprecated)]
+                    let arg = clap::Arg::new("debug")
+                        .value_name("DEBUG")
+                        .required(true && ArgAction::SetFalse.takes_values())
+                        .value_parser({
+                            use ::clap_builder::builder::impl_prelude::*;
+                            let auto = ::clap_builder::builder::_infer_ValueParser_for::<
+                                bool,
+                            >::new();
+                            (&&&&&&auto).value_parser()
+                        })
+                        .action(ArgAction::SetFalse);
+                    let arg = arg.long("debug").short('d');
+                    let arg = arg.required(false);
+                    arg
+                });
+            __clap_app.version("0.1.0").long_about(None)
+        }
+    }
+}
+pub fn main() {
+    let args = Args::parse();
+    let file_name: std::path::PathBuf = args.path;
+    let exe_name: String = args.name;
+    compile_c_file(file_name, exe_name, args.debug);
+}
+mod tests {
+    use std::{fs, path::Path, process::Command};
+    use test_each_file::test_each_path;
+    fn test([input, output]: [&Path; 2]) {
+        let name = input
+            .file_name()
+            .unwrap()
+            .to_str()
+            .unwrap()
+            .split(".")
+            .collect::<Vec<&str>>()[0];
+        let expected_output = fs::read_to_string(output).unwrap().into_bytes();
+        Command::new("bash")
+            .arg("../test_rh.sh")
+            .arg({
+                let res = ::alloc::fmt::format(format_args!("{0}", name));
+                res
+            })
+            .spawn()
+            .expect("Assembling failed");
+        let generated_output = Command::new({
+                let res = ::alloc::fmt::format(format_args!("./gen/core/{0}", name));
+                res
+            })
+            .output()
+            .unwrap()
+            .stdout;
+        match (&generated_output, &expected_output) {
+            (left_val, right_val) => {
+                if !(*left_val == *right_val) {
+                    let kind = ::core::panicking::AssertKind::Eq;
+                    ::core::panicking::assert_failed(
+                        kind,
+                        &*left_val,
+                        &*right_val,
+                        ::core::option::Option::None,
+                    );
+                }
+            }
+        };
+    }
+}

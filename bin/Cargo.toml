@@ -7,3 +7,5 @@ edition = "2021"
 clap = "4.5.17"
 colored = "2.1.0"
 rhododendron = { path = "../lib/" }
+test-each = "0.2.1"
+test_each_file = "0.3.3"

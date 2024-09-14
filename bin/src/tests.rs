@@ -1,44 +1,31 @@
-use colored::Colorize;
-use std::{
-    env, fs, io,
-    path::{Path, PathBuf},
-    process::Command,
-};
+use std::{fs, path::Path, process::Command};
+//use test_each_file::test_each_path;
+use test_each::path;
 
-#[test]
-fn test_all() {
-    let path = env::current_dir().unwrap();
-    println!("The current directory is {}", path.display());
-    let tests: Vec<PathBuf> =
-        get_all_files(&Path::new("../tests/core")).expect("No files to be tests");
-    let mut ret = String::new();
-
-    for test_i in 0..tests.len() {
-        let name = tests[test_i].file_stem().unwrap().to_str().unwrap();
-
-        println!("name: {}", name);
-
-        Command::new("bash")
-            .arg("../test_rh.sh")
-            .arg(format!("{}", name))
-            .spawn()
-            .expect("Assembling failed");
-
-        let generated_output = Command::new(format!("../gen/core/{}", name)).output();
-        match generated_output {
-            Ok(_) => ret.push_str(format!("{}\t\t\t[{}]", name, "OK".green()).as_str()),
-            Err(err) => ret.push_str(format!("{}\t\t\t[{}]\n{}", name, "ERR".red(), err).as_str()),
-        }
-    }
-
-    println!("{}", ret);
-}
-
-// Gets all files in a directory, returns them as a vector of path buffers
-fn get_all_files(path: &Path) -> io::Result<Vec<PathBuf>> {
-    let entries = fs::read_dir(path)?;
-    let all: Vec<PathBuf> = entries
-        .filter_map(|entry| Some(entry.ok()?.path()))
-        .collect();
-    Ok(all)
+// test_each_path!{ for ["rh", "out"] in "./tests/core" => test };
+//
+// fn test([input, output]: [&Path; 2]) {
+//     let name = input
+//         .file_name()
+//         .unwrap()
+//         .to_str()
+//         .unwrap()
+//         .split(".")
+//         .collect::<Vec<&str>>()[0];
+//     let expected_output = fs::read_to_string(output).unwrap().into_bytes();
+//
+//     Command::new("bash")
+//         .arg("../test_rh.sh")
+//         .arg(format!("{}", name))
+//         .spawn()
+//         .expect("Assembling failed");
+//
+//     let generated_output = Command::new(format!("./gen/core/{}", name))
+//         .output()
+//         .unwrap()
+//         .stdout;
+//     assert_eq!(generated_output, expected_output);
+// }
+fn test([input, output]: [&Path; 2]) {
+    // Make assertions on the path of `input` and `output` here.
 }
